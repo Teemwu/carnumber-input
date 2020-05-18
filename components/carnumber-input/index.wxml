@@ -1,0 +1,79 @@
+<view class="modal-box" hidden="{{!show}}">
+	<view class="modal-wrapper">
+		<view class="modal-title">
+			<view class="titleWrapper">
+				<text class="title-text">请录入车牌号</text>
+			</view>
+			<view class="iconWrapper">
+				<i class="close-icon" bindtap="cancel" class="p-iconfont icon-guanbi"></i>
+			</view>
+		</view>
+		<view class="modal-content">
+			<view class="modal-input">
+				<block wx:for="{{8}}" wx:key="index">
+					<view data-index="{{index}}" class="input {{selectInputIndex===index?'activeInput':''}}" bindtap='inputCarNum'>
+						<text>{{carNumArr[index] || ''}}</text>
+					</view>
+				</block>
+				<view class="line"></view>
+			</view>
+		</view>
+		<view class="model-btn-group">
+			<button bindtap="confirm" class="btn confirm" disabled="{{btnDisabled}}">确认</button>
+		</view>
+	</view>
+	<!-- 车牌 -->
+	<view class='keyboard'>
+		<!-- 省键盘 -->
+		<view class="provinces" hidden='{{hiddenPro}}'>
+			<view class="pro-li fl" wx:for="{{provinceArr}}" wx:key="index" catchtap='proTap' data-province="{{item}}">
+				{{item}}
+			</view>
+			<view class='kb-icon pro-li' catchtap='backSpace'>
+				<i class="p-iconfont icon-tagdelect"></i>
+			</view>
+		</view>
+		<!-- 号码键盘 -->
+		<view class="keyNums" hidden='{{hiddenStr}}'>
+			<view wx:if="{{selectInputIndex===1}}" class="row numRow">
+				<view class="pro-li  disabled" wx:for="{{numArr}}" wx:key="index" data-str="{{item}}">
+					{{item}}
+				</view>
+			</view>
+			<view wx:else class="row numRow">
+				<view class="pro-li " wx:for="{{numArr}}" wx:key="index" catchtap='strTap' data-str="{{item}}">
+					{{item}}
+				</view>
+			</view>
+			<view class="strOne row">
+				<view class="pro-li " wx:for="{{strArrOne}}" wx:key="index" catchtap='strTap' data-str="{{item}}">
+					{{item}}
+				</view>
+			</view>
+			<view class="strTwo row">
+				<view class="pro-li " wx:for="{{strArrTwo}}" wx:key="index" catchtap='strTap' data-str="{{item}}">
+					{{item}}
+				</view>
+			</view>
+			<view class="strThree row">
+				<block wx:for="{{strArrThree}}" wx:key="index">
+					<view class="pro-li" wx:if="{{selectInputIndex===6}}" catchtap='strTap' data-str="{{item}}">
+						{{item}}
+					</view>
+					<block wx:else>
+						<view class="pro-li" wx:if="{{index<4}}" catchtap='strTap' data-str="{{item}}">
+							{{item}}
+						</view>
+						<view class="pro-li disabled" wx:else data-str="{{item}}">
+							{{item}}
+						</view>
+					</block>
+				</block>
+				<view class='kb-icon pro-li' catchtap='backSpace'>
+					<i class="p-iconfont icon-tagdelect"></i>
+				</view>
+			</view>
+		</view>
+	</view>
+	<view class="modal-cover"></view>
+</view>
