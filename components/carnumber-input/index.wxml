@@ -12,7 +12,8 @@
 			<view class="modal-input">
 				<block wx:for="{{8}}" wx:key="index">
 					<view data-index="{{index}}" class="input {{selectInputIndex===index?'activeInput':''}}" bindtap='inputCarNum'>
-						<text>{{carNumArr[index] || ''}}</text>
+						<text wx:if="{{carNumArr[index]}}">{{carNumArr[index]}}</text>
+						<text wx:else class="input-placeholder">{{placeholderArr[index]||''}}</text>
 					</view>
 				</block>
 				<view class="line"></view>

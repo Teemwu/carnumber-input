@@ -1,2 +1,2 @@
-<button bindtap="showKB">输入车牌号</button>
-<carnumber-input value="粤C66666" show="{{isShowKB}}"></carnumber-input>
+<button bindtap="showKB">{{placeholder}}</button>
+<carnumber-input value="粤C" placeholder="{{placeholder}}" show="{{isShowKB}}" bind:confirm="confirm"></carnumber-input>

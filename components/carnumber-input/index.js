@@ -1,5 +1,6 @@
 const INPUT_NUM = 8 // 车牌号输入框个数
 const EmptyArray = new Array(INPUT_NUM).fill('') // ['','','','','','','','']
+const PlaceholderEmptyArray = new Array(INPUT_NUM).fill('') // ['','','','','','','','']
 
 // 车牌输入框的下标
 const INPUT_INDEX = {
@@ -15,18 +16,37 @@ Component({
     },
     value: {
       type: String,
-      value: EmptyArray
+      value: ''
+    },
+    placeholder: {
+      type: String,
+      value: ''
     }
   },
   observers: {
-    'value': function (val) {
+    value: function (val) {
       if (val) {
+        const index = val.length
+
         val.split('').forEach((item, index) => {
           EmptyArray[index] = item
         })
+
         this.setData({
           carNumArr: EmptyArray,
-          selectInputIndex: val.length
+          selectInputIndex: index
+        })
+        this.keyboard(index)
+      }
+
+    },
+    placeholder: function (val) {
+      if (val) {
+        val.split('').forEach((item, index) => {
+          PlaceholderEmptyArray[index] = item
+        })
+        this.setData({
+          placeholderArr: PlaceholderEmptyArray
         })
       }
     }
@@ -80,6 +100,7 @@ Component({
     hiddenPro: false, // 隐藏省份键盘
     hiddenStr: true, // 隐藏数字字母键盘
     carNumArr: EmptyArray,
+    placeholderArr: PlaceholderEmptyArray,
     selectInputIndex: 0,
     btnDisabled: true,
   },
@@ -119,14 +140,7 @@ Component({
         btnDisabled: this.btnDisabled(),
       })
     },
-    kbtrigger() {
-      this.setData({
-        hiddenPro: false,
-        hiddenStr: true,
-      })
-    },
-    inputCarNum(e) {
-      const { index } = e.currentTarget.dataset
+    keyboard(index) {
       this.setData({
         showCarKeyboard: true,
         selectInputIndex: index,
@@ -148,6 +162,10 @@ Component({
           hiddenStr: false,
         })
       }
+    },
+    inputCarNum(e) {
+      const { index } = e.currentTarget.dataset
+      this.keyboard(index)
     },
     backSpace() {
       // 删除
